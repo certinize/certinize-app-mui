@@ -1,4 +1,4 @@
-import { green, grey, red } from "@mui/material/colors";
+import { green, grey, red, yellow } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
 
 const rawTheme = createTheme({
@@ -7,16 +7,16 @@ const rawTheme = createTheme({
       main: "#FFFFFF",
     },
     secondary: {
-      main: "#FF9494",
+      main: "#FFD1D1",
     },
     warning: {
-      main: "#ffffff",
+      main: yellow[100],
     },
     error: {
-      main: red[500],
+      main: red[100],
     },
     success: {
-      main: green[500],
+      main: green[100],
     },
   },
   typography: {
