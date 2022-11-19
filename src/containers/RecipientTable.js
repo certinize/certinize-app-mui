@@ -1,11 +1,5 @@
 import AddIcon from "@mui/icons-material/Add";
-import {
-  Button,
-  Container,
-  FormControl,
-  FormGroup,
-  TextField,
-} from "@mui/material";
+import { Box, Button, FormControl, FormGroup, TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -62,7 +56,7 @@ const RecipientTable = ({ recipients, setRecipients }) => {
   };
 
   return (
-    <Container sx={{ marginTop: 10 }}>
+    <Box sx={{ marginTop: 10 }}>
       <FormGroup
         sx={{
           flexDirection: "row",
@@ -150,7 +144,7 @@ const RecipientTable = ({ recipients, setRecipients }) => {
           </TableBody>
         </Table>
       </TableContainer>
-    </Container>
+    </Box>
   );
 };
 

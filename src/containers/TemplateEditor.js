@@ -7,7 +7,7 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import { Box, Container } from "@mui/system";
+import { Box } from "@mui/system";
 import { toSvg } from "html-to-image";
 import { Image as MaterialImg } from "mui-image";
 import PropTypes from "prop-types";
@@ -50,7 +50,7 @@ const fontStyles = [
 
 const TemplateEditor = ({ template, setCertMeta }) => {
   const [fontStyle, setFontStyle] = React.useState("Arial");
-  const [fontSize, setFontSize] = React.useState(12);
+  const [fontSize, setFontSize] = React.useState(24);
   const [namePosition, setNamePosition] = React.useState({
     x: 0,
     y: 0,
@@ -100,7 +100,7 @@ const TemplateEditor = ({ template, setCertMeta }) => {
   };
 
   return (
-    <Container
+    <Box
       sx={{
         marginTop: 10,
         width: "100%",
@@ -237,7 +237,7 @@ const TemplateEditor = ({ template, setCertMeta }) => {
           </Box>
         </Draggable>
       </Box>
-    </Container>
+    </Box>
   );
 };
 

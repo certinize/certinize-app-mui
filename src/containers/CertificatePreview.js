@@ -20,7 +20,7 @@ const CertificatePreview = ({
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-end",
-        gap: 10,
+        gap: 20,
       }}
     >
       <Box
@@ -50,16 +50,24 @@ const CertificatePreview = ({
             </List>
           </Paper>
         </Box>
+        <Divider orientation="vertical" flexItem />
         <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
           <Typography variant="h5">Certificate Layout</Typography>
           <MaterialImg height={400} src={certMeta?.certDataUrl} />
         </Box>
+        <Divider orientation="vertical" flexItem />
         <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
           <Typography variant="h5">Issuance Date</Typography>
           <Typography>{issuanceDate}</Typography>
         </Box>
       </Box>
-      <Button variant="contained" startIcon={<SendIcon />}>
+      <Button
+        variant="contained"
+        startIcon={<SendIcon />}
+        sx={{
+          height: 64,
+        }}
+      >
         Issue Certificate
       </Button>
     </Box>
