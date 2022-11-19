@@ -7,21 +7,31 @@
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.13",
+    "@mui/x-date-pickers": "^5.0.8",
+    "@reduxjs/toolkit": "^1.9.0",
+    "@solana/web3.js": "^1.66.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "dayjs": "^1.11.6",
+    "html-to-image": "^1.10.8",
     "mui-image": "^1.0.7",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-draggable": "^4.4.5",
     "react-icons": "^4.6.0",
+    "react-intersection-observer": "^9.4.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject"
   },
   "eslintConfig": {
     "extends": [
@@ -42,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.0.0",
     "@trivago/prettier-plugin-sort-imports": "^3.4.0",
     "eslint": "^8.27.0",
     "eslint-plugin-react": "^7.31.10",

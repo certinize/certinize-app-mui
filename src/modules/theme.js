@@ -4,19 +4,19 @@ import { createTheme } from "@mui/material/styles";
 const rawTheme = createTheme({
   palette: {
     primary: {
-      main: "#FFFFFF",
+      main: "#495C83",
     },
     secondary: {
-      main: "#FFD1D1",
+      main: "#7A86B6",
     },
     warning: {
-      main: yellow[100],
+      main: yellow[400],
     },
     error: {
-      main: red[100],
+      main: red[400],
     },
     success: {
-      main: green[100],
+      main: green[400],
     },
   },
   typography: {

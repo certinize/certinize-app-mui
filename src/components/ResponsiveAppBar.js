@@ -12,16 +12,19 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { BiTransferAlt } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 const settings = ["Profile"];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -34,13 +37,17 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
+  const navigateToIssuance = () => {
+    navigate("/issuance");
+  };
+
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: "#fff" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Avatar
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-            src="https://github.com/certinize/assets/raw/main/images/certinize-logo.png"
+            src="https://github.com/certinize/certinize-app/raw/main/public/img/certinize-logo.png"
           />
           <Typography
             variant="h6"
@@ -51,7 +58,6 @@ const ResponsiveAppBar = () => {
               mr: 2,
               display: { xs: "none", md: "flex" },
               fontWeight: 700,
-              color: "inherit",
               textDecoration: "none",
               textTransform: "none",
             }}
@@ -88,7 +94,12 @@ const ResponsiveAppBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              <MenuItem onClick={handleCloseNavMenu}>
+              <MenuItem
+                onClick={() => {
+                  handleCloseNavMenu();
+                  navigateToIssuance();
+                }}
+              >
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <BiTransferAlt size={20} style={{ margin: 5 }} />
                   <Typography variant="subtitle2" textAlign="center">
@@ -100,7 +111,7 @@ const ResponsiveAppBar = () => {
           </Box>
           <Avatar
             sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-            src="https://github.com/certinize/assets/raw/main/images/certinize-logo.png"
+            src="https://github.com/certinize/certinize-app/raw/main/public/img/certinize-logo.png"
           />
           <Typography
             variant="h5"
@@ -128,6 +139,7 @@ const ResponsiveAppBar = () => {
           >
             <Tooltip title="Issue certificate">
               <Button
+                onClick={navigateToIssuance}
                 sx={{ my: 2, mx: 4, color: "black", alignItems: "center" }}
               >
                 <BiTransferAlt

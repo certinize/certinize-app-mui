@@ -1,13 +1,17 @@
-import ResponsiveAppBar from "../components/ResponsiveAppBar";
+import Container from "@mui/material/Container";
 import React from "react";
+
+import Navigation from "../components/Navigation";
+import ResponsiveAppBar from "../components/ResponsiveAppBar";
 
 const Dashboard = () => {
   return (
     <>
       <ResponsiveAppBar />
-      <div>
+      <Navigation />
+      <Container>
         <h1>Dashboard</h1>
-      </div>
+      </Container>
     </>
   );
 };
