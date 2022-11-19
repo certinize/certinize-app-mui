@@ -14,7 +14,12 @@ import * as React from "react";
 import { BiTransferAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
-const settings = ["Profile"];
+const settings = [
+  {
+    label: "Profile",
+    path: "/profile",
+  },
+];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -174,8 +179,14 @@ const ResponsiveAppBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem
+                  key={setting.label}
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    navigate(setting.path);
+                  }}
+                >
+                  <Typography textAlign="center">{setting.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>

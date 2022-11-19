@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import React from "react";
 
-export default function Certificate() {
+export default function IssuerVerification() {
   const inputRef = React.useRef();
   const [templateFile, setTemplateFile] = React.useState(null);
   return (
