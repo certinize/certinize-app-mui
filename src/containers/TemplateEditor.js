@@ -55,7 +55,7 @@ const TemplateEditor = ({ template, setCertMeta }) => {
     x: 0,
     y: 0,
   });
-  
+
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const getElementPosition = (element) => {
