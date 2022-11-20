@@ -10,6 +10,10 @@ import Profile from "../containers/Profile";
 const routes = createBrowserRouter([
   {
     path: "/",
+    element: <Issuance />,
+  },
+  {
+    path: "/welcome",
     element: <Landing />,
   },
   {

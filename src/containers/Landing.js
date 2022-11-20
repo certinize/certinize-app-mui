@@ -1,9 +1,37 @@
-import { Box, Button, Tooltip } from "@mui/material";
+import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import { WalletMultiButton } from "@solana/wallet-adapter-material-ui";
+import { useWallet } from "@solana/wallet-adapter-react";
 import { Image as MuiImage } from "mui-image";
 import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { authSolanaUser } from "../api/UserAPI";
+import {
+  setPubkey,
+  setUser,
+  setVerification,
+} from "../features/userSlice";
 
 export default function Landing() {
+  const dispatch = useDispatch();
+  const { publicKey } = useWallet();
+  const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+
+  if (publicKey) {
+    if (!user) {
+      authSolanaUser(publicKey.toBase58()).then((user) => {
+        dispatch(setUser(user.user));
+        dispatch(setPubkey(publicKey.toBase58()));
+        dispatch(setVerification(user.verification));
+      });
+
+      navigate("/issuance");
+    }
+  }
+
   return (
     <Box sx={{ position: "absolute", top: 0, right: 0, bottom: 0, left: 0 }}>
       <Box
@@ -32,11 +60,9 @@ export default function Landing() {
             Blockchain-based certificates that can&apos;t be lost, tampered
             with, or forged.
           </Typography>
-          <Tooltip>
-            <Button variant="contained" sx={{ height: 64, marginTop: 4, marginBottom: 4  }}>
-              Get Started
-            </Button>
-          </Tooltip>
+          <WalletMultiButton
+            sx={{ height: 64, marginTop: 4, marginBottom: 4 }}
+          />
         </Box>
         <MuiImage src="../images/landing.png" width="26vw" fit="contain" />
       </Box>
