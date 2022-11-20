@@ -52,7 +52,7 @@ const ResponsiveAppBar = () => {
         <Toolbar disableGutters>
           <Avatar
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-            src="https://github.com/certinize/certinize-app/raw/main/public/img/certinize-logo.png"
+            src="https://raw.githubusercontent.com/certinize/assets/main/images/certinize-logo.svg"
           />
           <Typography
             variant="h6"
@@ -116,7 +116,7 @@ const ResponsiveAppBar = () => {
           </Box>
           <Avatar
             sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-            src="https://github.com/certinize/certinize-app/raw/main/public/img/certinize-logo.png"
+            src="https://raw.githubusercontent.com/certinize/assets/main/images/certinize-logo.svg"
           />
           <Typography
             variant="h5"

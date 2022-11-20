@@ -1,146 +1,142 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
+import { Box, Button, Tooltip } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Unstable_Grid2";
-import Image from "mui-image";
+import { Image as MuiImage } from "mui-image";
 import * as React from "react";
 
 export default function Landing() {
   return (
-    <>
-      <div style={{ display: "flex", padding: 10, textAlign: "justify" }}>
-        <div>
-          <Typography
-            sx={{
-              display: "flex",
-              marginLeft: 10,
-              fontSize: 40,
-              fontWeight: "bold",
-              marginTop: 10,
-            }}
-          >
-            Turn your certificate into success
+    <Box sx={{ position: "absolute", top: 0, right: 0, bottom: 0, left: 0 }}>
+      <Box
+        sx={{
+          height: "60%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginLeft: "8vw",
+          marginRight: "8vw",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "flex-start",
+            gap: 2,
+          }}
+        >
+          <Typography sx={{ fontSize: "3vw", fontWeight: "bold" }}>
+            Get your certificates on the blockchain!
           </Typography>
-          <Typography sx={{ display: "flex", marginLeft: 10, fontSize: 20 }}>
-            Certificates are part of a personal information which verifies that
-            the holder has completed academic requirements.
+          <Typography sx={{ fontSize: "1.2vw" }}>
+            Blockchain-based certificates that can&apos;t be lost, tampered
+            with, or forged.
           </Typography>
           <Tooltip>
-            <Button
-              sx={{
-                marginLeft: 30,
-                backgroundColor: "#FF9494",
-                marginTop: 15,
-                height: 55,
-                fontWeight: "bold",
-                width: 195,
-              }}
-              variant="contained"
-              disableElevation
-            >
+            <Button variant="contained" sx={{ height: 64, marginTop: 4, marginBottom: 4  }}>
               Get Started
             </Button>
           </Tooltip>
-        </div>
-        <div>
-          <Image
-            duration={0}
-            height={490}
-            width={510}
-            sx={{ marginTop: 10 }}
-            src="../images/landing1.png"
-          />
-        </div>
-      </div>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid
-          container
-          spacing={2}
-          minHeight={350}
-          backgroundColor="#FFE3E1"
-          marginTop={15}
-        >
-          <Grid xs display="flex" justifyContent="center" alignItems="center">
-            <div
-              style={{
-                backgroundColor: "white",
-                height: 140,
-                width: 140,
-                borderRadius: 100,
-                boxShadow: "2px 2px 4px #888888 ",
-              }}
-            >
-              <img
-                style={{ height: 70, width: 70, marginTop: 33, marginLeft: 37 }}
-                src="../images/certificate.png"
-              />
-              <p
-                style={{
-                  marginTop: 60,
-                  fontWeight: "bold",
-                  fontSize: 20,
-                  marginLeft: 18,
-                }}
-              >
-                Certificate
-              </p>
-            </div>
-          </Grid>
-          <Grid display="flex" justifyContent="center" alignItems="center">
-            <div
-              style={{
-                backgroundColor: "white",
-                height: 140,
-                width: 140,
-                borderRadius: 100,
-                boxShadow: "2px 2px 4px #888888 ",
-              }}
-            >
-              <img
-                style={{ height: 70, width: 70, marginTop: 33, marginLeft: 37 }}
-                src="../images/blockchain.png"
-              />
-              <p
-                style={{
-                  marginTop: 60,
-                  fontWeight: "bold",
-                  fontSize: 20,
-                  marginLeft: 18,
-                }}
-              >
-                Blockchain
-              </p>
-            </div>
-          </Grid>
-          <Grid xs display="flex" justifyContent="center" alignItems="center">
-            <div
-              style={{
-                backgroundColor: "white",
-                height: 140,
-                width: 140,
-                borderRadius: 100,
-                boxShadow: "2px 2px 4px #888888 ",
-              }}
-            >
-              <img
-                style={{ height: 70, width: 70, marginTop: 33, marginLeft: 37 }}
-                src="../images/distributed.png"
-              />
-              <p
-                style={{
-                  marginTop: 60,
-                  fontWeight: "bold",
-                  fontSize: 20,
-                  marginLeft: 30,
-                }}
-              >
-                Issuance
-              </p>
-            </div>
-          </Grid>
-        </Grid>
+        </Box>
+        <MuiImage src="../images/landing.png" width="26vw" fit="contain" />
       </Box>
-    </>
+
+      <Box
+        sx={{
+          width: "100%",
+          height: "40%",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-evenly",
+          backgroundColor: "primary.main",
+        }}
+      >
+        <Box
+          sx={{
+            backgroundColor: "white",
+            height: "7vw",
+            width: "7vw",
+            borderRadius: 100,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <img
+            style={{ height: "4vw", width: "4vw", position: "absolute" }}
+            src="../images/certificate.png"
+          />
+          <p
+            style={{
+              fontWeight: "bold",
+              fontSize: "1.25vw",
+              color: "white",
+              position: "absolute",
+              marginTop: 220,
+            }}
+          >
+            Certificate
+          </p>
+        </Box>
+        <Box
+          sx={{
+            backgroundColor: "white",
+            height: "7vw",
+            width: "7vw",
+            borderRadius: 100,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <img
+            style={{ height: "4vw", width: "4vw" }}
+            src="../images/blockchain.png"
+          />
+          <p
+            style={{
+              fontWeight: "bold",
+              fontSize: "1.25vw",
+              color: "white",
+              position: "absolute",
+              marginTop: 220,
+            }}
+          >
+            Blockchain
+          </p>
+        </Box>
+        <Box
+          sx={{
+            backgroundColor: "white",
+            height: "7vw",
+            width: "7vw",
+            borderRadius: 100,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <img
+            style={{ height: "4vw", width: "4vw" }}
+            src="../images/distributed.png"
+          />
+          <p
+            style={{
+              fontWeight: "bold",
+              fontSize: "1.25vw",
+              color: "white",
+              position: "absolute",
+              marginTop: 220,
+            }}
+          >
+            Issuance
+          </p>
+        </Box>
+      </Box>
+    </Box>
   );
 }
