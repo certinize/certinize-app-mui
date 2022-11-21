@@ -70,7 +70,13 @@ const ResponsiveAppBar = () => {
             Certinize
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "flex", md: "none" },
+              color: "black",
+            }}
+          >
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -128,7 +134,7 @@ const ResponsiveAppBar = () => {
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
               fontWeight: 700,
-              color: "inherit",
+              color: "black",
               textDecoration: "none",
               textTransform: "none",
             }}
@@ -152,7 +158,7 @@ const ResponsiveAppBar = () => {
                   color="black"
                   style={{ marginRight: 10 }}
                 />
-                Certificate
+                Issue Certificate
               </Button>
             </Tooltip>
           </Box>

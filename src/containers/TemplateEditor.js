@@ -1,6 +1,6 @@
 import SaveIcon from "@mui/icons-material/Save";
+import LoadingButton from "@mui/lab/LoadingButton";
 import {
-  Button,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -41,14 +41,30 @@ const fontSizes = [
 ];
 
 const fontStyles = [
-  "Arial",
-  "Courier",
-  "Georgia",
-  "Times New Roman",
-  "Verdana",
+  {
+    label: "Arial",
+    url: "https://github.com/certinize/certinize-fonts/blob/main/ttf/arial.ttf?raw=true",
+  },
+  {
+    label: "Courier",
+    url: "https://github.com/certinize/certinize-fonts/blob/main/ttf/courier-new.ttf?raw=true",
+  },
+  {
+    label: "Georgia",
+    url: "https://github.com/certinize/certinize-fonts/blob/main/ttf/georgia.ttf?raw=true",
+  },
+  {
+    label: "Times New Roman",
+    url: "https://github.com/certinize/certinize-fonts/blob/main/ttf/times-new-roman.ttf?raw=true",
+  },
+  {
+    label: "Verdana",
+    url: "https://github.com/certinize/certinize-fonts/blob/main/ttf/verdana0.ttf?raw=true",
+  },
 ];
 
 const TemplateEditor = ({ template, setCertMeta }) => {
+  const [loading, setLoading] = React.useState(false);
   const [fontStyle, setFontStyle] = React.useState("Arial");
   const [fontSize, setFontSize] = React.useState(24);
   const [namePosition, setNamePosition] = React.useState({
@@ -86,14 +102,30 @@ const TemplateEditor = ({ template, setCertMeta }) => {
   };
 
   const generateCertificate = () => {
+    const templateHeight = document.getElementById("templateImg").clientHeight;
+    const templateWidth = document.getElementById("templateImg").clientWidth;
+
+    // Set default for namePosition if not set instead
+    // of alerting user to drag the placeholder.
+    var namePosX;
+    var namePosY;
+    var noDrag = false;
+
+    if (namePosition.x === 0 && namePosition.y === 0) {
+      namePosX = namePosition.x === 0 ? templateHeight / 2 : namePosition.x;
+      namePosY = namePosition.y === 0 ? templateWidth / 2 : namePosition.y;
+      noDrag = true;
+    }
+
     toSvg(document.getElementById("templateBox"), { quality: 1 }).then(
       (certDataUrl) => {
         setCertMeta({
           fontSize,
-          fontStyle,
-          namePosition,
+          fontStyle: fontStyles.find((font) => font.label === fontStyle).url,
+          namePosition: noDrag ? { x: namePosX, y: namePosY } : namePosition,
           template,
           certDataUrl,
+          templateHeight,
         });
       }
     );
@@ -140,8 +172,8 @@ const TemplateEditor = ({ template, setCertMeta }) => {
               onChange={handleFontStyleChange}
             >
               {fontStyles.map((style) => (
-                <MenuItem key={style} value={style}>
-                  {style}
+                <MenuItem key={style.label} value={style.label}>
+                  {style.label}
                 </MenuItem>
               ))}
             </Select>
@@ -178,22 +210,25 @@ const TemplateEditor = ({ template, setCertMeta }) => {
             </FormHelperText>
           </FormControl>
         </Box>
-
-        <Button
+        <LoadingButton
+          loading={loading}
           variant="contained"
           startIcon={<SaveIcon />}
           onClick={() => {
+            setLoading((prev) => !prev);
             generateCertificate();
             sleep(1000).then(() => {
               document.getElementById("PreviewCertificate").scrollIntoView({
                 behavior: "smooth",
               });
+
+              setLoading((prev) => !prev);
             });
           }}
           sx={{ height: 64 }}
         >
           Apply
-        </Button>
+        </LoadingButton>
       </Box>
       <Box
         id="templateBox"
@@ -231,7 +266,7 @@ const TemplateEditor = ({ template, setCertMeta }) => {
                   fontFamily: fontStyle,
                 }}
               >
-                Drag me! I&apos;m a name placeholder.
+                Maria Dela Cruz
               </span>
             ) : null}
           </Box>

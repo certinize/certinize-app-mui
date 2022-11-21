@@ -23,11 +23,11 @@ const DateSelection = ({ issuanceDate, setIssuanceDate }) => {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DesktopDatePicker
             label="Issuance Date"
-            inputFormat="YYYY/MM/DD"
+            inputFormat="YYYY-MM-DD"
             value={issuanceDate}
             onChange={(e) =>
               setIssuanceDate(
-                new Date(e).toISOString().split("T")[0].replace(/-/g, "/")
+                new Date(e).toISOString().split("T")[0]
               )
             }
             renderInput={(params) => <TextField {...params} />}

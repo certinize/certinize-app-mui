@@ -1,14 +1,17 @@
-/* eslint-disable no-unused-vars */
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import EditIcon from "@mui/icons-material/Edit";
 import FolderIcon from "@mui/icons-material/Folder";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PreviewIcon from "@mui/icons-material/Preview";
+import { useWallet } from "@solana/wallet-adapter-react";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import Navigation from "../components/Navigation";
+import AuthModal from "../api/AuthModa";
+import { authSolanaUser } from "../api/UserAPI";
 import PageSection from "../components/PageSection";
 import ResponsiveAppBar from "../components/ResponsiveAppBar";
+import { setPubkey, setUser, setVerification } from "../features/userSlice";
 import CertificatePreview from "./CertificatePreview";
 import DateSelection from "./DateSelection";
 import RecipientTable from "./RecipientTable";
@@ -16,13 +19,16 @@ import TemplateEditor from "./TemplateEditor";
 import TemplateSelection from "./TemplateSelection";
 
 const Issuance = () => {
-  const [nextPart, setNextPart] = React.useState(true);
+  const dispatch = useDispatch();
+  const { publicKey } = useWallet();
+  const { user } = useSelector((state) => state.user);
+
   const [issuanceDate, setIssuanceDate] = React.useState(
-    new Date().toISOString().split("T")[0].replace(/-/g, "/")
+    new Date().toISOString().split("T")[0]
   );
   const [recipients, setRecipients] = React.useState([]);
   const [certTemplate, setCertTemplate] = React.useState("");
-  const [certMeta, setCertMeta] = React.useState(null);
+  const [certMeta, setCertMeta] = React.useState({});
 
   const pageSections = [
     {
@@ -31,19 +37,17 @@ const Issuance = () => {
       description:
         "Enter the date when the certificate was earned or presented.",
       children: (
-        <>
-          <DateSelection
-            issuanceDate={issuanceDate}
-            setIssuanceDate={setIssuanceDate}
-          />
-        </>
+        <DateSelection
+          issuanceDate={issuanceDate}
+          setIssuanceDate={setIssuanceDate}
+        />
       ),
       pageHeight: 100,
     },
     {
       icon: <PersonAddIcon sx={{ fontSize: 48 }} />,
       title: "Add Recipient",
-      description: "Add your recipients.",
+      description: "Add your recipients!",
       children: (
         <RecipientTable recipients={recipients} setRecipients={setRecipients} />
       ),
@@ -60,7 +64,7 @@ const Issuance = () => {
         />
       ),
       // NOTE: This does not make the page responsive.
-      pageHeight: window.innerHeight > 800 ? 120 : 160,
+      pageHeight: window.innerHeight > 900 ? 120 : 160,
     },
     {
       icon: <EditIcon sx={{ fontSize: 48 }} />,
@@ -69,13 +73,12 @@ const Issuance = () => {
       children: (
         <TemplateEditor template={certTemplate} setCertMeta={setCertMeta} />
       ),
-      pageHeight: window.innerHeight > 800 ? 120 : 160,
+      pageHeight: window.innerHeight > 900 ? 120 : 160,
     },
     {
       icon: <PreviewIcon sx={{ fontSize: 48 }} />,
       title: "Preview Certificate",
-      description: "Make sure it looks the way that you want it to!",
-      pageHeight: 100,
+      description: "Make sure everything looks good!",
       children: (
         <CertificatePreview
           issuanceDate={issuanceDate}
@@ -84,6 +87,7 @@ const Issuance = () => {
           certMeta={certMeta}
         />
       ),
+      pageHeight: window.innerHeight > 900 ? 100 : 120,
     },
   ];
 
@@ -104,12 +108,20 @@ const Issuance = () => {
   };
 
   React.useEffect(() => {
-    setNextPart(!nextPart);
-  }, [issuanceDate, recipients, certTemplate, certMeta]);
+    if (publicKey && !user) {
+      authSolanaUser(publicKey.toBase58()).then((user) => {
+        console.log(user);
+        dispatch(setUser(user.user));
+        dispatch(setPubkey(publicKey.toBase58()));
+        dispatch(setVerification(user.verification));
+      });
+    }
+  }, [publicKey]);
 
   return (
     <>
       <ResponsiveAppBar />
+      <AuthModal pubkey={publicKey} />
       {/* <Navigation
         nextPart={nextPart}
         setNextPart={setNextPart}

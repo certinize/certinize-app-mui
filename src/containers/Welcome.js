@@ -8,13 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { authSolanaUser } from "../api/UserAPI";
-import {
-  setPubkey,
-  setUser,
-  setVerification,
-} from "../features/userSlice";
+import { setPubkey, setUser, setVerification } from "../features/userSlice";
 
-export default function Landing() {
+const Welcome = () => {
   const dispatch = useDispatch();
   const { publicKey } = useWallet();
   const { user } = useSelector((state) => state.user);
@@ -165,4 +161,6 @@ export default function Landing() {
       </Box>
     </Box>
   );
-}
+};
+
+export default Welcome;

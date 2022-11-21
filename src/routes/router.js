@@ -4,8 +4,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../containers/Dashboard";
 import Issuance from "../containers/Issuance";
 import IssuerVerification from "../containers/IssuerVerification";
-import Landing from "../containers/Landing";
 import Profile from "../containers/Profile";
+import Welcome from "../containers/Welcome";
 
 const routes = createBrowserRouter([
   {
@@ -14,7 +14,7 @@ const routes = createBrowserRouter([
   },
   {
     path: "/welcome",
-    element: <Landing />,
+    element: <Welcome />,
   },
   {
     path: "/dashboard",

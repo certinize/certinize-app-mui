@@ -1,6 +1,6 @@
+import { Button, Container } from "@mui/material";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import Image from "mui-image";
@@ -16,60 +16,78 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+const fields = [
+  {
+    name: "walletAddress",
+    label: "Wallet Address",
+  },
+  {
+    name: "officialEmail",
+    label: "Official Email",
+  },
+  {
+    name: "officialWebsite",
+    label: "Official Website",
+  },
+];
+
 const Profile = () => {
   return (
-    <>
+    <Box
+      sx={{
+        position: "absolute",
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+      }}
+    >
       <ResponsiveAppBar />
-      <div
-        style={{
+      <Container
+        sx={{
+          height: "70%",
           display: "flex",
-          padding: 20,
           alignItems: "center",
+          justifyContent: "space-evenly",
+          gap: 20,
           "@media (max-width: 768px)": { flexDirection: "column" },
         }}
       >
-        <div>
-          <div>
-            <Image
-              duration={0}
-              height={290}
-              width={290}
-              sx={{ marginTop: 10, marginLeft: 20 }}
-              src="../images/profile.png"
-            />
-          </div>
-          <div>
-            <Typography sx={{ fontSize: 15, marginTop: 10, marginLeft: 25 }}>
-              We are verifying your profile...
-            </Typography>
-          </div>
-        </div>
-        <div>
-          <Box sx={{ width: 450, marginLeft: 35 }}>
-            <Stack spacing={6}>
-              <div>
-                <Typography sx={{ fontWeight: "bold", fontSize: 15 }}>
-                  Wallet Address
-                </Typography>
-                <Item>Wallet Address</Item>
-              </div>
-              <div>
-                <Typography sx={{ fontWeight: "bold", fontSize: 15 }}>
-                  Official Email
-                </Typography>
-                <Item>Official Email</Item>
-              </div>
-              <div>
-                <Typography sx={{ fontWeight: "bold", fontSize: 15 }}>
-                  Official Website
-                </Typography>
-                <Item>Official Website</Item>
-              </div>
-            </Stack>
-          </Box>
-        </div>
-      </div>
-    </>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            gap: 4,
+          }}
+        >
+          <Image
+            duration={0}
+            height={290}
+            width={290}
+            src="../images/profile.png"
+          />
+          <Button variant="contained" sx={{ height: 64 }}>
+            Get Verified!
+          </Button>
+        </Box>
+        <Box
+          sx={{ width: 450, display: "flex", flexDirection: "column", gap: 4 }}
+        >
+          {fields.map((field, index) => (
+            <Box
+              key={index}
+              sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+            >
+              <Typography sx={{ fontWeight: "bold", fontSize: 15 }}>
+                {field.label}
+              </Typography>
+              <Item> {field.label}</Item>
+            </Box>
+          ))}
+        </Box>
+      </Container>
+    </Box>
   );
 };
 export default Profile;

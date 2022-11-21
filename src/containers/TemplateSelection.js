@@ -57,7 +57,7 @@ const TemplateSelection = ({ certTemplate, setTemplate }) => {
       }}
     >
       <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-        <Typography variant="h5">
+        <Typography variant="h5" color="secondary">
           You might want to create a new template...
         </Typography>
         <Box sx={{ display: "flex", gap: 4 }}>
@@ -90,7 +90,7 @@ const TemplateSelection = ({ certTemplate, setTemplate }) => {
         </Box>
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-        <Typography variant="h5">
+        <Typography variant="h5" color="secondary">
           Choose a premade template from our collection:
         </Typography>
         <Box
@@ -120,7 +120,7 @@ const TemplateSelection = ({ certTemplate, setTemplate }) => {
         </Box>
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-        <Typography variant="h5">
+        <Typography variant="h5" color="secondary">
           Already have a template? Upload it here:
         </Typography>
         <Box
