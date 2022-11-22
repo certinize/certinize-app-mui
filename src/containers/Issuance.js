@@ -7,8 +7,8 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import AuthModal from "../api/AuthModa";
 import { authSolanaUser } from "../api/UserAPI";
+import AuthModal from "../components/AuthModal";
 import PageSection from "../components/PageSection";
 import ResponsiveAppBar from "../components/ResponsiveAppBar";
 import { setPubkey, setUser, setVerification } from "../features/userSlice";
