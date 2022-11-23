@@ -10,7 +10,7 @@ const getApiKey = async () => {
     apiKey = store.getState().user.user.api_key;
   } catch (error) {
     console.warn(error.message);
-    return;
+    return "";
   }
 
   return apiKey;

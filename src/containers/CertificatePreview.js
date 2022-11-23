@@ -15,6 +15,7 @@ import { createTemplateConfig } from "../api/ConfigurationAPI";
 import { getUnsignedMessage, makeIssuanceRequest } from "../api/IssuanceAPI";
 import { createTemplate } from "../api/TemplateAPI";
 import IssuanceModal from "../components/IssuanceModal";
+import SuccessModal from "../components/SuccessModal";
 
 const defaultIssuerEmail = "certinize@gmail.com";
 
@@ -27,14 +28,15 @@ const CertificatePreview = ({
   const user = useSelector((state) => state.user.user);
   const { publicKey, signMessage } = useWallet();
   const [loading, setLoading] = React.useState(false);
-  const [modalOpen, setModalOpen] = React.useState(false);
-  const pubkey = publicKey.toBase58();
+  const [issuanceModalOpen, setIssuanceModalOpen] = React.useState(false);
+  const [successModalOpen, setSuccessModalOpen] = React.useState(false);
 
   // TODO: If user.email is empty, redirect to /issuer-verification.
   // This means the user is not verified and needs to submit a verification request.
 
   const handleIssuance = async () => {
     setLoading(true);
+    const pubkey = publicKey.toBase58();
     const unsignedMessage = await getUnsignedMessage(publicKey);
 
     if (unsignedMessage?.status_code == 400) {
@@ -46,6 +48,8 @@ const CertificatePreview = ({
     const signature = await signMessage(
       new TextEncoder().encode(unsignedMessage.message)
     );
+
+    setIssuanceModalOpen(true);
 
     const base64 = await certTemplateBase64(certTemplate);
     const templates = await saveTemplate(base64);
@@ -79,12 +83,20 @@ const CertificatePreview = ({
 
     const issuanceResponse = await makeIssuanceRequest(issuanceRequest);
     setLoading(false);
-    setModalOpen(true);
+    setIssuanceModalOpen(false);
+    setSuccessModalOpen(true);
   };
 
   return (
     <>
-      <IssuanceModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+      <IssuanceModal
+        isOpen={issuanceModalOpen}
+        onClose={() => setIssuanceModalOpen(false)}
+      />
+      <SuccessModal
+        isOpen={successModalOpen}
+        onClose={() => setSuccessModalOpen(false)}
+      />
       <Box
         sx={{
           display: "flex",

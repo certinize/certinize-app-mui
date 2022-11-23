@@ -1,4 +1,4 @@
-import { Box, Modal, Typography } from "@mui/material";
+import { Box, Divider, Modal, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -22,9 +22,14 @@ const IssuanceModal = ({ isOpen, onClose }) => {
           p: 4,
         }}
       >
-        <Typography id="authModal" variant="subtitle1" component="h2">
-          Issuance request sent!
-        </Typography>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <Typography variant="h4">Issuing certificate...</Typography>
+          <Divider />
+          <Typography variant="subtitle1">
+            We are currently processing your request. Please wait a few moments
+            before refreshing or closing the page.
+          </Typography>
+        </Box>
       </Box>
     </Modal>
   );

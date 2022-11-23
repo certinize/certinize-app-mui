@@ -10,4 +10,8 @@ const verifyUser = async (data) => {
   return await post(USERS, data);
 };
 
-export { authSolanaUser, verifyUser };
+const getUserVerificationStatus = async (pubkey) => {
+  return await getPath(`${USERS}/verification`, pubkey);
+};
+
+export { authSolanaUser, verifyUser, getUserVerificationStatus };
