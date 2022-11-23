@@ -9,7 +9,7 @@ const getApiKey = async () => {
   try {
     apiKey = store.getState().user.user.api_key;
   } catch (error) {
-    console.error(error);
+    console.warn(error.message);
     return;
   }
 
@@ -30,7 +30,7 @@ const post = async (endpoint, requestBody) => {
     });
     return await response.json();
   } catch (error) {
-    console.log(`Error: ${error}`);
+    console.error(error.message);
   }
 };
 
@@ -47,7 +47,7 @@ const get = async (endpoint) => {
     });
     return await response.json();
   } catch (error) {
-    console.log(`Error: ${error}`);
+    console.error(error.message);
   }
 };
 
@@ -64,7 +64,7 @@ const getPath = async (path, param) => {
     });
     return await response.json();
   } catch (error) {
-    console.log(`Error: ${error}`);
+    console.error(error.message);
   }
 };
 
@@ -82,7 +82,7 @@ const patch = async (requestBody, endpoint) => {
     });
     return await response.json();
   } catch (error) {
-    console.log(`Error: ${error}`);
+    console.error(error.message);
   }
 };
 

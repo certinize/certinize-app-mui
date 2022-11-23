@@ -3,15 +3,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import FolderIcon from "@mui/icons-material/Folder";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PreviewIcon from "@mui/icons-material/Preview";
-import { useWallet } from "@solana/wallet-adapter-react";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 
-import { authSolanaUser } from "../api/UserAPI";
-import AuthModal from "../components/AuthModal";
 import PageSection from "../components/PageSection";
-import ResponsiveAppBar from "../components/ResponsiveAppBar";
-import { setPubkey, setUser, setVerification } from "../features/userSlice";
 import CertificatePreview from "./CertificatePreview";
 import DateSelection from "./DateSelection";
 import RecipientTable from "./RecipientTable";
@@ -19,10 +13,6 @@ import TemplateEditor from "./TemplateEditor";
 import TemplateSelection from "./TemplateSelection";
 
 const Issuance = () => {
-  const dispatch = useDispatch();
-  const { publicKey } = useWallet();
-  const { user } = useSelector((state) => state.user);
-
   const [issuanceDate, setIssuanceDate] = React.useState(
     new Date().toISOString().split("T")[0]
   );
@@ -107,21 +97,8 @@ const Issuance = () => {
     });
   };
 
-  React.useEffect(() => {
-    if (publicKey && !user) {
-      authSolanaUser(publicKey.toBase58()).then((user) => {
-        console.log(user);
-        dispatch(setUser(user.user));
-        dispatch(setPubkey(publicKey.toBase58()));
-        dispatch(setVerification(user.verification));
-      });
-    }
-  }, [publicKey]);
-
   return (
     <>
-      <ResponsiveAppBar />
-      <AuthModal pubkey={publicKey} />
       {/* <Navigation
         nextPart={nextPart}
         setNextPart={setNextPart}

@@ -3,3 +3,12 @@ body {
   font-family: "Inter";
   text-transform: none;
 }
+
+.css-5t6yvv-MuiModal-root-MuiDialog-root {
+  color: #fff;
+  background-color: #495c83 !important;
+}
+
+.css-5t6yvv-MuiModal-root-MuiDialog-root {
+  background-color: white !important;
+}

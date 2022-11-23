@@ -5,7 +5,7 @@ export const userSlice = createSlice({
   initialState: {
     pubkey: null,
     user: null,
-    verification: null,
+    verification: {},
   },
   reducers: {
     setPubkey: (state, action) => {
@@ -20,7 +20,7 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.pubkey = null;
       state.user = null;
-      state.verification = null;
+      state.verification = {};
     },
   },
 });

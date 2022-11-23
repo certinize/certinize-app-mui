@@ -33,7 +33,7 @@ const TemplateSelection = ({ certTemplate, setTemplate }) => {
       try {
         reader.readAsDataURL(file);
       } catch (e) {
-        console.error(e.message);
+        console.warn(e.message);
       }
     });
   };

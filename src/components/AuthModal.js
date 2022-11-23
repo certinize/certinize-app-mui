@@ -2,13 +2,26 @@ import { Box, Modal, Typography } from "@mui/material";
 import { WalletMultiButton } from "@solana/wallet-adapter-material-ui";
 import PropTypes from "prop-types";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { authSolanaUser } from "../api/UserAPI";
+import { setPubkey, setUser, setVerification } from "../features/userSlice";
 
 const AuthModal = ({ pubkey }) => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
 
   React.useEffect(() => {
     if (pubkey) {
+      if (!user) {
+        authSolanaUser(pubkey).then((user) => {
+          dispatch(setUser(user.user));
+          dispatch(setPubkey(pubkey));
+          dispatch(setVerification(user.verification));
+        });
+      }
       setOpen(false);
     } else {
       setOpen(true);

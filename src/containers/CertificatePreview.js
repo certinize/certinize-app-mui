@@ -8,12 +8,15 @@ import bs58 from "bs58";
 import { Image as MaterialImg } from "mui-image";
 import PropTypes from "prop-types";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { generateCert, getCert } from "../api/CertificateAPI";
 import { createTemplateConfig } from "../api/ConfigurationAPI";
 import { getUnsignedMessage, makeIssuanceRequest } from "../api/IssuanceAPI";
 import { createTemplate } from "../api/TemplateAPI";
+import IssuanceModal from "../components/IssuanceModal";
+
+const defaultIssuerEmail = "certinize@gmail.com";
 
 const CertificatePreview = ({
   issuanceDate,
@@ -24,16 +27,23 @@ const CertificatePreview = ({
   const user = useSelector((state) => state.user.user);
   const { publicKey, signMessage } = useWallet();
   const [loading, setLoading] = React.useState(false);
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const pubkey = publicKey.toBase58();
+
+  // TODO: If user.email is empty, redirect to /issuer-verification.
+  // This means the user is not verified and needs to submit a verification request.
 
   const handleIssuance = async () => {
+    setLoading(true);
     const unsignedMessage = await getUnsignedMessage(publicKey);
 
     if (unsignedMessage?.status_code == 400) {
       alert(unsignedMessage.detail);
+      setLoading(false);
       return;
     }
 
-    const signature = signMessage(
+    const signature = await signMessage(
       new TextEncoder().encode(unsignedMessage.message)
     );
 
@@ -50,97 +60,102 @@ const CertificatePreview = ({
       request_id: unsignedMessage.request_id,
       signature: bs58.encode(signature),
       issuer_meta: {
-        issuer_name: user.name,
-        issuer_email: user.email,
+        issuer_name: user.name || pubkey,
+        issuer_email: user.email || defaultIssuerEmail,
         issuer_website: user.website,
-        issuer_pubkey: publicKey.toBase58(),
+        issuer_pubkey: pubkey,
       },
       recipient_meta: recipients.map((recipient) => {
         return {
           recipient_name: recipient.name,
           recipient_email: recipient.email,
-          recipient_pubkey: recipient.publicKey,
-          recipient_ecert_url: certificate.find(
-            (cert) => cert.recipient_pubkey === recipient.publicKey
-          ).ecert_url,
+          recipient_pubkey: recipient.wallet,
+          recipient_ecert_url: certificate.certificate.certificate.find(
+            (cert) => cert.recipient_name === recipient.name
+          ).certificate_url,
         };
       }),
     };
 
-    console.log(issuanceRequest);
+    const issuanceResponse = await makeIssuanceRequest(issuanceRequest);
+    setLoading(false);
+    setModalOpen(true);
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-end",
-        gap: 20,
-      }}
-    >
+    <>
+      <IssuanceModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
-          gap: 10,
-          marginTop: 10,
-          width: "100%",
+          flexDirection: "column",
+          alignItems: "flex-end",
+          gap: 20,
         }}
       >
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignSelf: "flex-start",
-              gap: 4,
-            }}
-          >
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            gap: 10,
+            marginTop: 10,
+            width: "100%",
+          }}
+        >
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignSelf: "flex-start",
+                gap: 4,
+              }}
+            >
+              <Typography variant="overline" color="secondary">
+                Issuance Date
+              </Typography>
+              <Typography>{issuanceDate}</Typography>
+            </Box>
             <Typography variant="overline" color="secondary">
-              Issuance Date
+              Recipients
             </Typography>
-            <Typography>{issuanceDate}</Typography>
+            <Paper
+              sx={{
+                maxHeight: 200,
+                overflow: "auto",
+                display: recipients.length === 0 ? "none" : "block",
+              }}
+            >
+              <List>
+                {recipients?.map((recipient) => (
+                  <ListItem key={recipient.wallet}>
+                    <Typography>{recipient.name}</Typography>
+                  </ListItem>
+                ))}
+              </List>
+            </Paper>
           </Box>
-          <Typography variant="overline" color="secondary">
-            Recipients
-          </Typography>
-          <Paper
-            sx={{
-              maxHeight: 200,
-              overflow: "auto",
-              display: recipients.length === 0 ? "none" : "block",
-            }}
-          >
-            <List>
-              {recipients?.map((recipient) => (
-                <ListItem key={recipient.wallet}>
-                  <Typography>{recipient.name}</Typography>
-                </ListItem>
-              ))}
-            </List>
-          </Paper>
+          <Divider orientation="vertical" flexItem />
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            <Typography variant="overline" color="secondary">
+              Certificate Layout
+            </Typography>
+            <MaterialImg height={400} src={certMeta?.certDataUrl || ""} />
+          </Box>
         </Box>
-        <Divider orientation="vertical" flexItem />
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-          <Typography variant="overline" color="secondary">
-            Certificate Layout
-          </Typography>
-          <MaterialImg height={400} src={certMeta?.certDataUrl} />
-        </Box>
+        <LoadingButton
+          loading={loading}
+          onClick={handleIssuance}
+          variant="contained"
+          startIcon={<SendIcon />}
+          sx={{
+            height: 64,
+          }}
+        >
+          Issue Certificate
+        </LoadingButton>
       </Box>
-      <LoadingButton
-        loading={loading}
-        onClick={handleIssuance}
-        variant="contained"
-        startIcon={<SendIcon />}
-        sx={{
-          height: 64,
-        }}
-      >
-        Issue Certificate
-      </LoadingButton>
-    </Box>
+    </>
   );
 };
 
@@ -169,6 +184,8 @@ async function createCertificate(templateConfig, issuanceDate, recipients) {
     await new Promise((r) => setTimeout(r, 1000));
     cert = await getCert(generateCertReq.request_id);
   }
+
+  return cert;
 }
 
 async function saveTemplateConfig(certMeta, templates) {

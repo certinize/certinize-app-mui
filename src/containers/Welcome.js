@@ -5,7 +5,6 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { Image as MuiImage } from "mui-image";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 import { authSolanaUser } from "../api/UserAPI";
 import { setPubkey, setUser, setVerification } from "../features/userSlice";
@@ -14,7 +13,6 @@ const Welcome = () => {
   const dispatch = useDispatch();
   const { publicKey } = useWallet();
   const { user } = useSelector((state) => state.user);
-  const navigate = useNavigate();
 
   if (publicKey) {
     if (!user) {
@@ -23,8 +21,6 @@ const Welcome = () => {
         dispatch(setPubkey(publicKey.toBase58()));
         dispatch(setVerification(user.verification));
       });
-
-      navigate("/issuance");
     }
   }
 

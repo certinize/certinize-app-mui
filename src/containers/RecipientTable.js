@@ -26,6 +26,12 @@ const RecipientTable = ({ recipients, setRecipients }) => {
     email: false,
   });
 
+  const removeRow = (index) => {
+    const newRecipients = [...recipients];
+    newRecipients.splice(index, 1);
+    setRecipients(newRecipients);
+  };
+
   const addRow = () => {
     if (recipient.name && recipient.wallet && recipient.email) {
       try {
@@ -128,6 +134,7 @@ const RecipientTable = ({ recipients, setRecipients }) => {
               <TableCell align="left">Name</TableCell>
               <TableCell align="left">Wallet Address</TableCell>
               <TableCell align="left">Email Address</TableCell>
+              <TableCell align="left"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -139,6 +146,15 @@ const RecipientTable = ({ recipients, setRecipients }) => {
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.wallet}</TableCell>
                 <TableCell align="left">{row.email}</TableCell>
+                <TableCell align="left">
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={() => removeRow(index)}
+                  >
+                    Remove
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

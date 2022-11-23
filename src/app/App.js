@@ -1,23 +1,27 @@
-import { ThemeProvider } from "@mui/material/styles";
 import React from "react";
-import { Provider } from "react-redux";
-import { RouterProvider } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
-import WalletContextProvider from "../components/WalletContextProvier";
-import theme from "../modules/theme";
-import routes from "../routes/router";
+import ResponsiveAppBar from "../components/ResponsiveAppBar";
+import Issuance from "../containers/Issuance";
+import IssuerVerification from "../containers/IssuerVerification";
+import Profile from "../containers/Profile";
+import Welcome from "../containers/Welcome";
 import "./App.css";
-import store from "./store";
 
 function App() {
   return (
-    <Provider store={store}>
-      <WalletContextProvider>
-        <ThemeProvider theme={theme}>
-          <RouterProvider router={routes} />
-        </ThemeProvider>
-      </WalletContextProvider>
-    </Provider>
+    <>
+      <Routes>
+        <Route path="/welcome" element={<Welcome />} />
+        <Route path="/verification" element={<div />} />
+        <Route element={<ResponsiveAppBar />}>
+          <Route path="/" element={<Issuance />} />
+          <Route path="/issuance" element={<Issuance />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/issuer-verification" element={<IssuerVerification />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 

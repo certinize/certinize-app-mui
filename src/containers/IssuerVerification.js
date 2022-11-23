@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -8,6 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import Container from "@mui/material/Container";
+import { useWallet } from "@solana/wallet-adapter-react";
 import { MuiFileInput } from "mui-file-input";
 import React from "react";
 
@@ -24,21 +24,37 @@ const boxStyle = {
 };
 
 export default function IssuerVerification() {
+  const { publicKey } = useWallet();
   const [loading, setLoading] = React.useState(false);
   const [verifyReq, setVerifyReq] = React.useState({
-    pubkey: "",
+    organization_name: "",
+    pvtkey: "",
     info_link: "",
     official_website: "",
     official_email: "",
     organization_id: "",
-    approved: "",
   });
   const [orgId, setOrgId] = React.useState(null);
-  const handleChange = (e) => setOrgId(e);
+
+  const handleChange = (e) => {
+    setOrgId(e);
+    imgToBase64(e).then((res) => {
+      setVerifyReq({ ...verifyReq, organization_id: res.split(",")[1] });
+    });
+  };
 
   const handleSubmit = async () => {
     setLoading(true);
-    console.log(verifyReq);
+
+    const res = await verifyUser({
+      ...verifyReq,
+      pubkey: publicKey.toBase58(),
+    });
+
+    // TODO: Show modal, tell user that the request was sent.
+    if (res) {
+      window.location.href = "/profile";
+    }
   };
 
   return (
@@ -64,35 +80,31 @@ export default function IssuerVerification() {
             <b>
               With Certinize, people do not have to verify certificates. They
               only need to validate the issuing body, your organization.
-            </b>{" "}
-            It means to find out if a wallet address used to issue a certificate
-            belongs to an organization.
+            </b>
           </Typography>
           <Typography paragraph={true} sx={{ textAlign: "justify" }}>
-            The verification process is optional. People can still verify an
-            issuing body themselves using other means. You don&apos;t have to
-            provide us with your organization&apos;s information, but it will
-            help people authenticate an issuing body more quickly. If you are
-            familiar with Twitter&apos;s verified badge, this process implements
-            the same concept.
+            In other words, they need find out if a wallet address used to issue
+            a certificate is actually owned by an organization.
           </Typography>
         </Box>
         <Box sx={boxStyle}>
           <FormControl sx={{ gap: 2, marginBottom: 4 }}>
             <Typography sx={{ fontWeight: "bold" }} variant="subtitle1">
-              1. Enter your wallet private key.
+              1. Enter the name of your organization.
             </Typography>
-            <Typography>
-              This will enable us to perform automated transactions on your
-              behalf. You still need to sign each and every transaction the
-              system needs to make.
+            <Typography paragraph={true} sx={{ textAlign: "justify" }}>
+              The name of your organization will be included in every
+              certificate metadata stored on the blockchain.
             </Typography>
             <TextField
-              id="walletPrivateKey"
-              label="Enter private key"
+              id="organizationName"
+              label="Your organization's name"
               variant="outlined"
               onChange={(e) =>
-                setVerifyReq({ ...verifyReq, pubkey: e.target.value })
+                setVerifyReq({
+                  ...verifyReq,
+                  organization_name: e.target.value,
+                })
               }
               sx={{ maxWidth: "70%" }}
             />
@@ -101,7 +113,29 @@ export default function IssuerVerification() {
         <Box sx={boxStyle}>
           <FormControl sx={{ gap: 2, marginBottom: 4 }}>
             <Typography sx={{ fontWeight: "bold" }} variant="subtitle1">
-              2. Provide a link we can use to verify your organization&apos;s
+              2. Enter your wallet private key.
+            </Typography>
+            <Typography paragraph={true} sx={{ textAlign: "justify" }}>
+              Providing your wallet&apos;s private key will enable us to perform
+              transactions on your behalf. For security, you still need to sign
+              and authorize each and every transaction the system needs to make.
+            </Typography>
+            <TextField
+              type="password"
+              id="walletPrivateKey"
+              label="Enter private key"
+              variant="outlined"
+              onChange={(e) =>
+                setVerifyReq({ ...verifyReq, pvtkey: e.target.value })
+              }
+              sx={{ maxWidth: "70%" }}
+            />
+          </FormControl>
+        </Box>
+        <Box sx={boxStyle}>
+          <FormControl sx={{ gap: 2, marginBottom: 4 }}>
+            <Typography sx={{ fontWeight: "bold" }} variant="subtitle1">
+              3. Provide a link we can use to verify your organization&apos;s
               identity and credibility.
             </Typography>
             <Typography>
@@ -110,39 +144,25 @@ export default function IssuerVerification() {
             <ul>
               <li>
                 <Typography paragraph={true}>
-                  <Typography
-                    sx={{ fontWeight: "bold" }}
-                    variant="subtitle1"
-                    color="primary"
-                  >
-                    Google Trends
-                  </Typography>
-                  A profile on Google Trends with evidence of recent search
+                  <span style={{ fontWeight: "bold" }}>Google Trends: </span>A
+                  profile on Google Trends with evidence of recent search
                   activity about your organization.
                 </Typography>
               </li>
               <li>
                 <Typography paragraph={true}>
-                  <Typography
-                    sx={{ fontWeight: "bold" }}
-                    variant="subtitle1"
-                    color="primary"
-                  >
-                    Wikipedia article
-                  </Typography>
+                  <span style={{ fontWeight: "bold" }}>
+                    Wikipedia article:{" "}
+                  </span>
                   A Wikipedia article that is about you and meets their
                   notability standards for people.
                 </Typography>
               </li>
               <li>
                 <Typography paragraph={true}>
-                  <Typography
-                    sx={{ fontWeight: "bold" }}
-                    variant="subtitle1"
-                    color="primary"
-                  >
-                    Public stock exchange
-                  </Typography>
+                  <span style={{ fontWeight: "bold" }}>
+                    Public stock exchange:{" "}
+                  </span>
                   A link providing evidence of substantial presence in a public
                   stock exchange.
                 </Typography>
@@ -162,7 +182,7 @@ export default function IssuerVerification() {
         <Box sx={boxStyle}>
           <FormControl sx={{ gap: 2, marginBottom: 4 }}>
             <Typography sx={{ fontWeight: "bold" }} variant="subtitle1">
-              1. Enter your official website.
+              4. Enter your official website.
             </Typography>
             <Typography paragraph={true}>
               Provide the link to an official website that references your
@@ -182,7 +202,7 @@ export default function IssuerVerification() {
         <Box sx={boxStyle}>
           <FormControl sx={{ gap: 2, marginBottom: 4 }}>
             <Typography sx={{ fontWeight: "bold" }} variant="subtitle1">
-              1. Enter your official email address.
+              5. Enter your official email address.
             </Typography>
             <Typography paragraph={true}>
               Provide an official email address with a domain relevant to the
@@ -202,7 +222,7 @@ export default function IssuerVerification() {
         <Box sx={boxStyle}>
           <FormControl sx={{ gap: 2, marginBottom: 4 }}>
             <Typography sx={{ fontWeight: "bold" }} variant="subtitle1">
-              1. Upload a photo of your organization&apos;s logo.
+              6. Upload a photo of your organization&apos;s logo.
             </Typography>
             <Typography paragraph={true}>
               Provide a photo of a valid official organization-issued
@@ -227,4 +247,19 @@ export default function IssuerVerification() {
       </Box>
     </Container>
   );
+}
+
+function imgToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
 }
