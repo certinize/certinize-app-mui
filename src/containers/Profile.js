@@ -113,7 +113,7 @@ const Profile = () => {
                 <Typography sx={{ fontWeight: "bold", fontSize: 15 }}>
                   {field.label}
                 </Typography>
-                <Item>{renderUserInformation(field)}</Item>
+                <Item>{renderUserInformation(field) || "Not Available"}</Item>
               </Box>
             ))}
           </Box>

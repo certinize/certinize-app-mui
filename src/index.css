@@ -4,11 +4,11 @@ body {
   text-transform: none;
 }
 
-.css-5t6yvv-MuiModal-root-MuiDialog-root {
-  color: #fff;
+#\:r2\: {
   background-color: #495c83 !important;
+  color: #fff !important;
 }
 
-.css-5t6yvv-MuiModal-root-MuiDialog-root {
+html > body > div:nth-of-type(5) > div:nth-of-type(3) > div > div > ul {
   background-color: white !important;
 }
