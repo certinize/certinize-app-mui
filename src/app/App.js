@@ -13,9 +13,9 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/welcome" element={<Welcome />} />
         <Route path="/verification" element={<Verification />} />
         <Route element={<ResponsiveAppBar />}>
+          <Route path="/welcome" element={<Welcome />} />
           <Route path="/" element={<Issuance />} />
           <Route path="/issuance" element={<Issuance />} />
           <Route path="/profile" element={<Profile />} />

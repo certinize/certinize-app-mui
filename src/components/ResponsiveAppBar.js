@@ -15,7 +15,7 @@ import * as React from "react";
 import { BiTransferAlt } from "react-icons/bi";
 import { Outlet, useNavigate } from "react-router-dom";
 
-import AuthModal from "./AuthModal";
+import AuthDialog from "./AuthDialog";
 
 const settings = [
   {
@@ -42,7 +42,7 @@ const ResponsiveAppBar = () => {
 
   return (
     <>
-      <AuthModal pubkey={publicKey?.toBase58()} />
+      <AuthDialog pubkey={publicKey?.toBase58()} />
 
       <AppBar position="static" sx={{ backgroundColor: "#fff" }}>
         <Container maxWidth="xl">

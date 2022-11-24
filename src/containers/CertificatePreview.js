@@ -14,8 +14,8 @@ import { generateCert, getCert } from "../api/CertificateAPI";
 import { createTemplateConfig } from "../api/ConfigurationAPI";
 import { getUnsignedMessage, makeIssuanceRequest } from "../api/IssuanceAPI";
 import { createTemplate } from "../api/TemplateAPI";
-import IssuanceModal from "../components/IssuanceModal";
-import SuccessModal from "../components/SuccessModal";
+import IssuanceDialog from "../components/IssuanceDialog";
+import SuccessDialog from "../components/SuccessDialog";
 
 const defaultIssuerEmail = "certinize@gmail.com";
 
@@ -89,11 +89,11 @@ const CertificatePreview = ({
 
   return (
     <>
-      <IssuanceModal
+      <IssuanceDialog
         isOpen={issuanceModalOpen}
         onClose={() => setIssuanceModalOpen(false)}
       />
-      <SuccessModal
+      <SuccessDialog
         isOpen={successModalOpen}
         onClose={() => setSuccessModalOpen(false)}
       />

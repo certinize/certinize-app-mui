@@ -25,7 +25,7 @@ const Welcome = () => {
   }
 
   return (
-    <Box sx={{ position: "absolute", top: 0, right: 0, bottom: 0, left: 0 }}>
+    <Box sx={{ height: "100vh" }}>
       <Box
         sx={{
           height: "60%",
@@ -45,7 +45,7 @@ const Welcome = () => {
             gap: 2,
           }}
         >
-          <Typography sx={{ fontSize: "3vw", fontWeight: "bold" }}>
+          <Typography sx={{ fontSize: "2.5vw", fontWeight: "bold" }}>
             Get your certificates on the blockchain!
           </Typography>
           <Typography sx={{ fontSize: "1.2vw" }}>

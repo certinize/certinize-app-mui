@@ -5,7 +5,7 @@ import Image from "mui-image";
 import React from "react";
 
 import { getUserVerificationStatus } from "../api/UserAPI";
-import VerificationModal from "../components/VerificationModal";
+import VerificationDialog from "../components/VerificationDialog";
 
 const Verification = () => {
   const [openModal, setModalOpen] = React.useState(false);
@@ -31,7 +31,7 @@ const Verification = () => {
 
   return (
     <>
-      <VerificationModal
+      <VerificationDialog
         isOpen={openModal}
         onClose={() => setModalOpen(false)}
         issuerInfo={issuerInfo}

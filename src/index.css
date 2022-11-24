@@ -4,11 +4,6 @@ body {
   text-transform: none;
 }
 
-#\:r2\: {
-  background-color: #495c83 !important;
-  color: #fff !important;
-}
-
 html > body > div:nth-of-type(5) > div:nth-of-type(3) > div > div > ul {
   background-color: white !important;
 }
