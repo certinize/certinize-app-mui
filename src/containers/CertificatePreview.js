@@ -19,12 +19,7 @@ import SuccessDialog from "../components/SuccessDialog";
 
 const defaultIssuerEmail = "certinize@gmail.com";
 
-const CertificatePreview = ({
-  issuanceDate,
-  recipients,
-  certTemplate,
-  certMeta,
-}) => {
+const CertificatePreview = ({ recipients, certTemplate, certMeta }) => {
   const user = useSelector((state) => state.user.user);
   const { publicKey, signMessage } = useWallet();
   const [loading, setLoading] = React.useState(false);
@@ -54,11 +49,7 @@ const CertificatePreview = ({
     const base64 = await certTemplateBase64(certTemplate);
     const templates = await saveTemplate(base64);
     const templateConfig = await saveTemplateConfig(certMeta, templates);
-    const certificate = await createCertificate(
-      templateConfig,
-      issuanceDate,
-      recipients
-    );
+    const certificate = await createCertificate(templateConfig, recipients);
 
     const issuanceRequest = {
       request_id: unsignedMessage.request_id,
@@ -115,19 +106,6 @@ const CertificatePreview = ({
           }}
         >
           <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignSelf: "flex-start",
-                gap: 4,
-              }}
-            >
-              <Typography variant="overline" color="secondary">
-                Issuance Date
-              </Typography>
-              <Typography>{issuanceDate}</Typography>
-            </Box>
             <Typography variant="overline" color="secondary">
               Recipients
             </Typography>
@@ -172,16 +150,14 @@ const CertificatePreview = ({
 };
 
 CertificatePreview.propTypes = {
-  issuanceDate: PropTypes.string.isRequired,
   recipients: PropTypes.array.isRequired,
   certTemplate: PropTypes.string.isRequired,
   certMeta: PropTypes.object.isRequired,
 };
 
-async function createCertificate(templateConfig, issuanceDate, recipients) {
+async function createCertificate(templateConfig, recipients) {
   const generateCertReqBody = {
     template_config_id: templateConfig.template_config_id,
-    issuance_date: issuanceDate,
     recipients: recipients.map((recipient) => {
       return {
         recipient_name: recipient.name,

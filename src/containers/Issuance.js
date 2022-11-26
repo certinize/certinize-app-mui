@@ -1,4 +1,3 @@
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import EditIcon from "@mui/icons-material/Edit";
 import FolderIcon from "@mui/icons-material/Folder";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
@@ -7,33 +6,16 @@ import React from "react";
 
 import PageSection from "../components/PageSection";
 import CertificatePreview from "./CertificatePreview";
-import DateSelection from "./DateSelection";
 import RecipientTable from "./RecipientTable";
 import TemplateEditor from "./TemplateEditor";
 import TemplateSelection from "./TemplateSelection";
 
 const Issuance = () => {
-  const [issuanceDate, setIssuanceDate] = React.useState(
-    new Date().toISOString().split("T")[0]
-  );
   const [recipients, setRecipients] = React.useState([]);
   const [certTemplate, setCertTemplate] = React.useState("");
   const [certMeta, setCertMeta] = React.useState({});
 
   const pageSections = [
-    {
-      icon: <CalendarMonthIcon sx={{ fontSize: 48 }} />,
-      title: "Issuance Date",
-      description:
-        "Enter the date when the certificate was earned or presented.",
-      children: (
-        <DateSelection
-          issuanceDate={issuanceDate}
-          setIssuanceDate={setIssuanceDate}
-        />
-      ),
-      pageHeight: 100,
-    },
     {
       icon: <PersonAddIcon sx={{ fontSize: 48 }} />,
       title: "Add Recipient",
@@ -71,7 +53,6 @@ const Issuance = () => {
       description: "Make sure everything looks good!",
       children: (
         <CertificatePreview
-          issuanceDate={issuanceDate}
           recipients={recipients}
           certTemplate={certTemplate}
           certMeta={certMeta}
@@ -97,16 +78,7 @@ const Issuance = () => {
     });
   };
 
-  return (
-    <>
-      {/* <Navigation
-        nextPart={nextPart}
-        setNextPart={setNextPart}
-        pageSections={pageSections}
-      /> */}
-      {createPageSections()}
-    </>
-  );
+  return <>{createPageSections()}</>;
 };
 
 export default Issuance;

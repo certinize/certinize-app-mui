@@ -22,8 +22,9 @@ const Verification = () => {
   const verifyIssuer = async (e) => {
     e.preventDefault();
     setBtnLoading(true);
+
     const info = await getUserVerificationStatus(issuerPubkey);
-    console.log(info);
+
     setIssuerInfo(info);
     setModalOpen(true);
     setBtnLoading(false);
@@ -125,4 +126,5 @@ const Verification = () => {
     </>
   );
 };
+
 export default Verification;
