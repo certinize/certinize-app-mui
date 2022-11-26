@@ -92,10 +92,6 @@ export default function IssuerVerification() {
             <Typography sx={{ fontWeight: "bold" }} variant="subtitle1">
               1. Enter the name of your organization.
             </Typography>
-            <Typography paragraph={true} sx={{ textAlign: "justify" }}>
-              The name of your organization will be included in every
-              certificate metadata stored on the blockchain.
-            </Typography>
             <TextField
               id="organizationName"
               label="Your organization's name"
@@ -116,9 +112,16 @@ export default function IssuerVerification() {
               2. Enter your wallet private key.
             </Typography>
             <Typography paragraph={true} sx={{ textAlign: "justify" }}>
-              Providing your wallet&apos;s private key will enable us to perform
-              transactions on your behalf. For security, you still need to sign
-              and authorize each and every transaction the system needs to make.
+              Your{" "}
+              <a
+                href="https://docs.solana.com/terminology#private-key"
+                target="_blank"
+                rel="noreferrer"
+              >
+                private key
+              </a>{" "}
+              will give us access to your Solana wallet. For security, you still
+              need to authorize every transaction the system needs to make.
             </Typography>
             <TextField
               type="password"
