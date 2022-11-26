@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 
 import ResponsiveAppBar from "../components/ResponsiveAppBar";
+import CertVerification from "../containers/CertVerification";
 import Issuance from "../containers/Issuance";
 import IssuerVerification from "../containers/IssuerVerification";
 import Profile from "../containers/Profile";
@@ -14,6 +15,14 @@ function App() {
     <>
       <Routes>
         <Route path="/verification" element={<Verification />} />
+        <Route
+          path="/certificate-verification/"
+          element={<CertVerification />}
+        />
+        <Route
+          path="/certificate-verification/:tokenAddress"
+          element={<CertVerification />}
+        />
         <Route element={<ResponsiveAppBar />}>
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/" element={<Issuance />} />
