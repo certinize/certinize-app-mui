@@ -5,7 +5,6 @@ import PreviewIcon from "@mui/icons-material/Preview";
 import TitleIcon from "@mui/icons-material/Title";
 import React from "react";
 
-import Navigation from "../components/Navigation";
 import PageSection from "../components/PageSection";
 import CertificatePreview from "./CertificatePreview";
 import EventTitleField from "./EventTitleField";
@@ -90,7 +89,7 @@ const Issuance = () => {
 
   return (
     <>
-      <Navigation />
+      {/* <Navigation /> */}
       {createPageSections()}
     </>
   );

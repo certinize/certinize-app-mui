@@ -13,11 +13,17 @@ const PageSection = ({ icon, title, description, children, height }) => {
   const [pageHeight, setPageHeight] = React.useState(height);
 
   React.useEffect(() => {
+    if (window.innerHeight > 900) {
+      setPageHeight(height);
+    } else {
+      setPageHeight(height + 40);
+    }
+
     window.addEventListener("resize", () => {
       if (window.innerHeight > 900) {
         setPageHeight(height);
       } else {
-        setPageHeight(height + 20);
+        setPageHeight(height + 60);
       }
     });
   }, []);
