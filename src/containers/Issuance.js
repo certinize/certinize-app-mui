@@ -2,10 +2,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import FolderIcon from "@mui/icons-material/Folder";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PreviewIcon from "@mui/icons-material/Preview";
+import TitleIcon from "@mui/icons-material/Title";
 import React from "react";
 
+import Navigation from "../components/Navigation";
 import PageSection from "../components/PageSection";
 import CertificatePreview from "./CertificatePreview";
+import EventTitleField from "./EventTitleField";
 import RecipientTable from "./RecipientTable";
 import TemplateEditor from "./TemplateEditor";
 import TemplateSelection from "./TemplateSelection";
@@ -16,6 +19,14 @@ const Issuance = () => {
   const [certMeta, setCertMeta] = React.useState({});
 
   const pageSections = [
+    {
+      icon: <TitleIcon sx={{ fontSize: 48 }} />,
+      title: "Event Title",
+      description:
+        "Enter an event title! Titles help you organize and find certificates.",
+      children: <EventTitleField />,
+      pageHeight: 100,
+    },
     {
       icon: <PersonAddIcon sx={{ fontSize: 48 }} />,
       title: "Add Recipient",
@@ -35,8 +46,7 @@ const Issuance = () => {
           setTemplate={setCertTemplate}
         />
       ),
-      // NOTE: This does not make the page responsive.
-      pageHeight: window.innerHeight > 900 ? 120 : 160,
+      pageHeight: 120,
     },
     {
       icon: <EditIcon sx={{ fontSize: 48 }} />,
@@ -45,7 +55,7 @@ const Issuance = () => {
       children: (
         <TemplateEditor template={certTemplate} setCertMeta={setCertMeta} />
       ),
-      pageHeight: window.innerHeight > 900 ? 120 : 160,
+      pageHeight: 120,
     },
     {
       icon: <PreviewIcon sx={{ fontSize: 48 }} />,
@@ -58,7 +68,7 @@ const Issuance = () => {
           certMeta={certMeta}
         />
       ),
-      pageHeight: window.innerHeight > 900 ? 100 : 120,
+      pageHeight: 100,
     },
   ];
 
@@ -78,7 +88,12 @@ const Issuance = () => {
     });
   };
 
-  return <>{createPageSections()}</>;
+  return (
+    <>
+      <Navigation />
+      {createPageSections()}
+    </>
+  );
 };
 
 export default Issuance;

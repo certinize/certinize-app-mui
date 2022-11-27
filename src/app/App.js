@@ -14,13 +14,10 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/verification" element={<Verification />} />
+        <Route path="/issuer-verification" element={<Verification />} />
+        <Route path="/verification/" element={<CertVerification />} />
         <Route
-          path="/certificate-verification/"
-          element={<CertVerification />}
-        />
-        <Route
-          path="/certificate-verification/:tokenAddress"
+          path="/verification/:tokenAddress"
           element={<CertVerification />}
         />
         <Route element={<ResponsiveAppBar />}>
@@ -28,7 +25,10 @@ function App() {
           <Route path="/" element={<Issuance />} />
           <Route path="/issuance" element={<Issuance />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/issuer-verification" element={<IssuerVerification />} />
+          <Route
+            path="/verification-request"
+            element={<IssuerVerification />}
+          />
         </Route>
       </Routes>
     </>

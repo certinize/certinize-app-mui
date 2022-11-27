@@ -51,7 +51,7 @@ const Profile = () => {
       <Button
         variant="contained"
         sx={{ height: 64 }}
-        onClick={() => navigate("/issuer-verification")}
+        onClick={() => navigate("/verification-request")}
       >
         Get Verified!
       </Button>

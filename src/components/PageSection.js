@@ -10,13 +10,24 @@ import { useInView } from "react-intersection-observer";
 
 const PageSection = ({ icon, title, description, children, height }) => {
   const { ref, inView } = useInView({ threshold: 0.5, triggerOnce: true });
+  const [pageHeight, setPageHeight] = React.useState(height);
+
+  React.useEffect(() => {
+    window.addEventListener("resize", () => {
+      if (window.innerHeight > 900) {
+        setPageHeight(height);
+      } else {
+        setPageHeight(height + 20);
+      }
+    });
+  }, []);
 
   return (
     <Container
       id={title.replace(/\s/g, "")}
       sx={{
         marginTop: 2,
-        height: `${height}vh`,
+        height: `${pageHeight}vh`,
       }}
       ref={ref}
     >
@@ -53,7 +64,7 @@ const PageSection = ({ icon, title, description, children, height }) => {
               style={{
                 marginLeft: 22,
                 borderLeft: "2px solid #1389B5",
-                height: `${height - 10}vh`,
+                height: `${pageHeight - 10}vh`,
               }}
             ></Box>
           </Collapse>

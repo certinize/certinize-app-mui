@@ -26,7 +26,7 @@ const CertificatePreview = ({ recipients, certTemplate, certMeta }) => {
   const [issuanceModalOpen, setIssuanceModalOpen] = React.useState(false);
   const [successModalOpen, setSuccessModalOpen] = React.useState(false);
 
-  // TODO: If user.email is empty, redirect to /issuer-verification.
+  // TODO: If user.email is empty, redirect to /verification-request.
   // This means the user is not verified and needs to submit a verification request.
 
   const handleIssuance = async () => {

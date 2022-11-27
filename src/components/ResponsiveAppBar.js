@@ -44,7 +44,7 @@ const ResponsiveAppBar = () => {
     <>
       <AuthDialog pubkey={publicKey?.toBase58()} />
 
-      <AppBar position="static" sx={{ backgroundColor: "#fff" }}>
+      <AppBar position="sticky" sx={{ backgroundColor: "#fff" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Avatar

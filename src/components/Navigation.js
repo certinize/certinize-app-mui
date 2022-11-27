@@ -1,42 +1,61 @@
-/* eslint-disable no-unused-vars */
-import CloseIcon from "@mui/icons-material/Close";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { Button, keyframes } from "@mui/material";
+import NavigationIcon from "@mui/icons-material/Navigation";
+import { Fab } from "@mui/material";
+import "@mui/material";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import PropTypes from "prop-types";
 import React from "react";
 
-const glow = keyframes`
-from {
-  box-shadow: 0 0 0 0 rgba(73, 92, 131, 1);
-}
-to {
-  box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
-}`;
+const getHeightOfHeader = () => {
+  const header = document.getElementsByTagName("header")[0];
+  const headerHeight = header?.getBoundingClientRect().height;
+  return headerHeight;
+};
 
-const Navigation = ({ nextPart, setNextPart, pageSections }) => {
-  const [currentSection, setCurrentSection] = React.useState(0);
-  const scrollIntoView = (index) => {
-    const element = document.getElementById(
-      pageSections[index].title.replace(/\s/g, "")
-    );
-    element.scrollIntoView({ behavior: "smooth" });
-    setCurrentSection(index);
+const getHeight = () => {
+  const headerHeight = getHeightOfHeader() + 32;
+  const height = window.innerHeight - headerHeight;
+  const percentage = (height / window.innerHeight) * 100;
+  return percentage;
+};
+
+const Navigation = () => {
+  const [navHeight, setNavHeight] = React.useState();
+
+  const handleUpClick = () => {
+    window.scrollBy({ left: 0, top: -window.innerHeight, behavior: "smooth" });
   };
+
+  const handleDownClick = () => {
+    window.scrollBy({ left: 0, top: window.innerHeight, behavior: "smooth" });
+  };
+
+  React.useEffect(() => {
+    setNavHeight(getHeight());
+
+    window.addEventListener("resize", () => {
+      setNavHeight(getHeight());
+    });
+  }, []);
 
   return (
     <Box
       sx={{
         position: "fixed",
-        top: "40%",
         bottom: 16,
         right: 16,
         zIndex: 999,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        height: `${navHeight}%`,
       }}
     >
-      <Container
+      <Fab color="primary" aria-label="navigation" onClick={handleUpClick}>
+        <NavigationIcon />
+      </Fab>
+      <Fab color="primary" aria-label="navigation" onClick={handleDownClick}>
+        <NavigationIcon sx={{ transform: "rotate(180deg)" }} />
+      </Fab>
+      {/* <Container
         maxWidth="sm"
         sx={{
           padding: 1,
@@ -75,15 +94,9 @@ const Navigation = ({ nextPart, setNextPart, pageSections }) => {
         >
           <KeyboardArrowDownIcon fontSize="large" />
         </Button>
-      </Container>
+      </Container> */}
     </Box>
   );
-};
-
-Navigation.propTypes = {
-  nextPart: PropTypes.bool.isRequired,
-  setNextPart: PropTypes.func.isRequired,
-  pageSections: PropTypes.array.isRequired,
 };
 
 export default Navigation;
