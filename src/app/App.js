@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import ResponsiveAppBar from "../components/ResponsiveAppBar";
 import CertVerification from "../containers/CertVerification";
 import Issuance from "../containers/Issuance";
+import IssuanceGallery from "../containers/IssuanceGallery";
 import IssuerVerification from "../containers/IssuerVerification";
 import Profile from "../containers/Profile";
 import Verification from "../containers/Verification";
@@ -29,6 +30,7 @@ function App() {
             path="/verification-request"
             element={<IssuerVerification />}
           />
+          <Route path="/issuance-gallery" element={<IssuanceGallery />} />
         </Route>
       </Routes>
     </>

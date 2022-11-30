@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import { useWallet } from "@solana/wallet-adapter-react";
 import * as React from "react";
 import { BiTransferAlt } from "react-icons/bi";
+import { TfiGallery } from "react-icons/tfi";
 import { Outlet, useNavigate } from "react-router-dom";
 
 import AuthDialog from "./AuthDialog";
@@ -39,6 +40,8 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => setAnchorElUser(null);
 
   const navigateToIssuance = () => navigate("/issuance");
+
+  const navigateToGallery = () => navigate("/issuance-gallery");
 
   return (
     <>
@@ -116,6 +119,19 @@ const ResponsiveAppBar = () => {
                     </Typography>
                   </div>
                 </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    navigateToGallery();
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <TfiGallery size={20} style={{ margin: 5 }} />
+                    <Typography variant="subtitle2" textAlign="center">
+                      Issuance Gallery
+                    </Typography>
+                  </div>
+                </MenuItem>
               </Menu>
             </Box>
             <Avatar
@@ -149,7 +165,7 @@ const ResponsiveAppBar = () => {
               <Tooltip title="Issue certificate">
                 <Button
                   onClick={navigateToIssuance}
-                  sx={{ my: 2, mx: 4, color: "black", alignItems: "center" }}
+                  sx={{ my: 2, mx: 1, color: "black", alignItems: "center" }}
                 >
                   <BiTransferAlt
                     size={20}
@@ -157,6 +173,19 @@ const ResponsiveAppBar = () => {
                     style={{ marginRight: 10 }}
                   />
                   Issue Certificate
+                </Button>
+              </Tooltip>
+              <Tooltip title="Issuance Gallery">
+                <Button
+                  onClick={navigateToGallery}
+                  sx={{ my: 2, mx: 1, color: "black", alignItems: "center" }}
+                >
+                  <TfiGallery
+                    size={20}
+                    color="black"
+                    style={{ marginRight: 10 }}
+                  />
+                  Issuance Gallery
                 </Button>
               </Tooltip>
             </Box>

@@ -19,7 +19,12 @@ import SuccessDialog from "../components/SuccessDialog";
 
 const defaultIssuerEmail = "certinize@gmail.com";
 
-const CertificatePreview = ({ recipients, certTemplate, certMeta }) => {
+const CertificatePreview = ({
+  recipients,
+  certTemplate,
+  certMeta,
+  eventTitle,
+}) => {
   const user = useSelector((state) => state.user.user);
   const { publicKey, signMessage } = useWallet();
   const [loading, setLoading] = React.useState(false);
@@ -54,6 +59,7 @@ const CertificatePreview = ({ recipients, certTemplate, certMeta }) => {
     const issuanceRequest = {
       request_id: unsignedMessage.request_id,
       signature: bs58.encode(signature),
+      event_title: eventTitle,
       issuer_meta: {
         issuer_name: user.name || pubkey,
         issuer_email: user.email || defaultIssuerEmail,
@@ -153,6 +159,7 @@ CertificatePreview.propTypes = {
   recipients: PropTypes.array.isRequired,
   certTemplate: PropTypes.string.isRequired,
   certMeta: PropTypes.object.isRequired,
+  eventTitle: PropTypes.string.isRequired,
 };
 
 async function createCertificate(templateConfig, recipients) {

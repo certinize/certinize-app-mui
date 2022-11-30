@@ -3,7 +3,9 @@ import FolderIcon from "@mui/icons-material/Folder";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PreviewIcon from "@mui/icons-material/Preview";
 import TitleIcon from "@mui/icons-material/Title";
+import { Box, Container, Divider, Typography } from "@mui/material";
 import React from "react";
+import { BiTransferAlt } from "react-icons/bi";
 
 import PageSection from "../components/PageSection";
 import CertificatePreview from "./CertificatePreview";
@@ -13,6 +15,7 @@ import TemplateEditor from "./TemplateEditor";
 import TemplateSelection from "./TemplateSelection";
 
 const Issuance = () => {
+  const [eventTitle, setEventTitle] = React.useState("");
   const [recipients, setRecipients] = React.useState([]);
   const [certTemplate, setCertTemplate] = React.useState("");
   const [certMeta, setCertMeta] = React.useState({});
@@ -23,7 +26,12 @@ const Issuance = () => {
       title: "Event Title",
       description:
         "Enter an event title! Titles help you organize and find certificates.",
-      children: <EventTitleField />,
+      children: (
+        <EventTitleField
+          eventTitle={eventTitle}
+          setEventTitle={setEventTitle}
+        />
+      ),
       pageHeight: 100,
     },
     {
@@ -89,7 +97,22 @@ const Issuance = () => {
 
   return (
     <>
-      {/* <Navigation /> */}
+      <Container>
+        <Divider textAlign="left">
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <BiTransferAlt fontSize={36} style={{ marginRight: 10 }} />
+            <Typography variant="h4" sx={{ marginTop: 4, marginBottom: 4 }}>
+              Issue Certificate
+            </Typography>
+          </Box>
+        </Divider>
+      </Container>
       {createPageSections()}
     </>
   );
