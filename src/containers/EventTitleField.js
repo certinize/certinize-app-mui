@@ -7,13 +7,14 @@ const EventTitleField = ({ eventTitle, setEventTitle }) => {
   return (
     <Box>
       <TextField
-        id="outlined-basic"
+        data-testid="event-title-input-field"
         label="Event Title"
         variant="outlined"
         sx={{ width: "50%" }}
         required={true}
         value={eventTitle}
         onChange={(e) => setEventTitle(e.target.value)}
+        aria-describedby="event-title-helper-text"
       />
     </Box>
   );

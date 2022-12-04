@@ -70,6 +70,7 @@ const Issuance = () => {
       description: "Make sure everything looks good!",
       children: (
         <CertificatePreview
+          eventTitle={eventTitle}
           recipients={recipients}
           certTemplate={certTemplate}
           certMeta={certMeta}

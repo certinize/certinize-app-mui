@@ -225,7 +225,7 @@ export default function IssuerVerification() {
         <Box sx={boxStyle}>
           <FormControl sx={{ gap: 2, marginBottom: 4 }}>
             <Typography sx={{ fontWeight: "bold" }} variant="subtitle1">
-              6. Upload a photo of your organization&apos;s logo.
+              6. Upload a valid organization ID.
             </Typography>
             <Typography paragraph={true}>
               Provide a photo of a valid official organization-issued

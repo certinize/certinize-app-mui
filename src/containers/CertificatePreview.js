@@ -31,10 +31,20 @@ const CertificatePreview = ({
   const [issuanceModalOpen, setIssuanceModalOpen] = React.useState(false);
   const [successModalOpen, setSuccessModalOpen] = React.useState(false);
 
-  // TODO: If user.email is empty, redirect to /verification-request.
-  // This means the user is not verified and needs to submit a verification request.
+  const validateFields = () => {
+    if (!user.email) {
+      alert("Please verify your email first!");
+      window.location.href = "/verification-request";
+    }
+
+    if (!recipients || !certTemplate || !certMeta || !eventTitle) {
+      alert("Please fill in all the fields!");
+      window.location.href = "/issuance";
+    }
+  };
 
   const handleIssuance = async () => {
+    validateFields();
     setLoading(true);
     const pubkey = publicKey.toBase58();
     const unsignedMessage = await getUnsignedMessage(publicKey);
@@ -78,7 +88,8 @@ const CertificatePreview = ({
       }),
     };
 
-    const issuanceResponse = await makeIssuanceRequest(issuanceRequest);
+    console.log(issuanceRequest);
+    // await makeIssuanceRequest(issuanceRequest);
     setLoading(false);
     setIssuanceModalOpen(false);
     setSuccessModalOpen(true);
