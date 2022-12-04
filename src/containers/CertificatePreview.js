@@ -88,8 +88,7 @@ const CertificatePreview = ({
       }),
     };
 
-    console.log(issuanceRequest);
-    // await makeIssuanceRequest(issuanceRequest);
+    await makeIssuanceRequest(issuanceRequest);
     setLoading(false);
     setIssuanceModalOpen(false);
     setSuccessModalOpen(true);
