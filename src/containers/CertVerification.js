@@ -222,7 +222,7 @@ const CertVerification = () => {
             <Typography variant="overline">Issuer Information</Typography>
             <Stack>
               <Item>
-                <Typography variant="h6">Isser Name</Typography>
+                <Typography variant="h6">Issuer Name</Typography>
                 <Typography variant="body1">
                   {dialogContent?.issuerName}
                 </Typography>
@@ -234,19 +234,19 @@ const CertVerification = () => {
                 </Typography>
               </Item>
               <Item>
-                <Typography variant="h6">Isser Website</Typography>
+                <Typography variant="h6">Issuer Website</Typography>
                 <Typography variant="body1">
                   {dialogContent?.issuerWebsite}
                 </Typography>
               </Item>
               <Item>
-                <Typography variant="h6">Isser Email</Typography>
+                <Typography variant="h6">Issuer Email</Typography>
                 <Typography variant="body1">
                   {dialogContent?.issuerEmail}
                 </Typography>
               </Item>
               <Item>
-                <Typography variant="h6">Isser Verified On</Typography>
+                <Typography variant="h6">Issuer Verified On</Typography>
                 <Typography variant="body1">
                   {dialogContent?.verifiedOn}
                 </Typography>
