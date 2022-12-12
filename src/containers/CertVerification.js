@@ -1,9 +1,10 @@
-/* eslint-disable no-unused-vars */
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ErrorIcon from "@mui/icons-material/Error";
+import PrintIcon from "@mui/icons-material/Print";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
+  Button,
   CircularProgress,
   Container,
   Dialog,
@@ -19,6 +20,7 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import Image from "mui-image";
+import QRCode from "qrcode";
 import React from "react";
 import { useParams } from "react-router-dom";
 
@@ -56,6 +58,7 @@ const CertVerification = () => {
     issuerEmail: "",
     verifiedOn: "",
   });
+  const [qrCode, setQrCode] = React.useState("");
 
   const verifyCertificate = async (tokenAddress) => {
     setLoading(true);
@@ -132,6 +135,11 @@ const CertVerification = () => {
     setBtnLoading(false);
   };
 
+  const printVerificationDiag = () => {
+    document.getElementById("print-btn")?.remove();
+    window.print();
+  };
+
   React.useEffect(() => {
     const verify = async () => {
       setCertTokenAddress(tokenAddress);
@@ -140,6 +148,16 @@ const CertVerification = () => {
 
     if (tokenAddress) {
       verify();
+    }
+
+    if (qrCode.length === 0) {
+      QRCode.toDataURL(window.location.href)
+        .then((url) => {
+          setQrCode(url);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
 
     return () => {};
@@ -196,6 +214,7 @@ const CertVerification = () => {
         onClose={() => setModalOpen(false)}
         aria-describedby="alert-dialog-slide"
         maxWidth="md"
+        id="alert-dialog-slide"
       >
         <DialogTitle>
           Certificate Token Address: <b>{certTokenAddress}</b>
@@ -207,6 +226,7 @@ const CertVerification = () => {
             {dialogContent?.contentText}
             <CheckCircleIcon color="success" />
           </DialogContentText>
+          <img src={qrCode} alt="QR Code" />
           <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
           <Box>
             <Typography variant="overline">Recipient Information</Typography>
@@ -252,6 +272,23 @@ const CertVerification = () => {
                 </Typography>
               </Item>
             </Stack>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "flex-end",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Button
+              variant="contained"
+              startIcon={<PrintIcon />}
+              onClick={printVerificationDiag}
+              id="print-btn"
+            >
+              Print
+            </Button>
           </Box>
         </DialogContent>
       </Dialog>
