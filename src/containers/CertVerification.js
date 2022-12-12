@@ -217,7 +217,14 @@ const CertVerification = () => {
         id="alert-dialog-slide"
       >
         <DialogTitle>
-          Certificate Token Address: <b>{certTokenAddress}</b>
+          Certificate Token Address:{" "}
+          <a
+            href={`https://solscan.io/token/${certTokenAddress}?cluster=devnet`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <b>{certTokenAddress}</b>
+          </a>
         </DialogTitle>
         <DialogContent>
           <DialogContentText
